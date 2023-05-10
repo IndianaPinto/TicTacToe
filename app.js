@@ -14,57 +14,42 @@ let conditions = [
 ];
 
 const ticTacToe = (element, index) => {
-    element.value = currentPlayer;
-    element.disabled = true;
-    cells[index] = currentPlayer;
-    currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
-    result.innerHTML = `Player ${currentPlayer} Turn`;
+  element.value = currentPlayer;
+  element.disabled = true;
+  cells[index] = currentPlayer;
+  currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+  result.innerHTML = `Player ${currentPlayer} Turn`;
 
-    let isDraw = true;
-    for (let i = 0; i < cells.length; i++) {
-        if (cells[i] == '') {
-            isDraw = false;
-            break;
-        }
+  for (let i = 0; i < conditions.length; i++) {
+    let condition = conditions[i];
+    let a = cells[condition[0]];
+    let b = cells[condition[1]];
+    let c = cells[condition[2]];
+
+    if (a == '' || b == '' || c == '') {
+      continue;
     }
 
-    if (isDraw) {
-        result.innerHTML = 'It\'s a draw!';
-        btns.forEach((btn) => btn.disabled = true);
-        return;
+    if ((a == b) && (b == c)) {
+      result.innerHTML = `Player ${a} Won 🎉`;
+      btns.forEach((btn) => btn.disabled = true);
+      return;
     }
+  }
 
-    for (let i = 0; i < conditions.length; i++) {
-        let condition = conditions[i];
-        let a = cells[condition[0]];
-        let b = cells[condition[1]];
-        let c = cells[condition[2]];
-
-        if (a == '' || b == '' || c == '') {
-            continue;
-        }
-
-        if ((a == b) && (b == c)) {
-            result.innerHTML = `Player ${a} Won 🎉`;
-            btns.forEach((btn) => btn.disabled = true);
-        }
+  let isDraw = true;
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i] == '') {
+      isDraw = false;
+      break;
     }
+  }
 
-    for (let i = 0; i < conditions.length; i++) {
-        let condition = conditions[i];
-        let a = cells[condition[0]];
-        let b = cells[condition[1]];
-        let c = cells[condition[2]];
-
-        if (a == '' || b == '' || c == '') {
-            continue;
-        }
-
-        if ((a == b) && (b == c)) {
-            result.innerHTML = `Player ${a} Won 🎉`;
-            btns.forEach((btn) => btn.disabled = true);
-        }
-    }
+  if (isDraw) {
+    result.innerHTML = 'It\'s a draw!';
+    btns.forEach((btn) => btn.disabled = true);
+    return;
+  }
 };
 
 function reset() {
